@@ -1,0 +1,110 @@
+Compile:
+
+./makeoptscript
+or
+./makescript
+
+Run:
+
+aimleap -abslimit 100 -constdist 8.0 -maxdepth 10 example1
+aimleap -abslimit 100 -advisorsocket 12159 example1
+aimleap -abslimit 100 -advisorsocket 12159 -maxdepth 20 example2
+
+Communication with advisor:
+
+Messages to the advisor:
+
+. 0 sending current goal pair (two terms) and asking for suggestions for middle term
+
+* Valid Replies:
+
+0 [no suggestions]
+<n> where n is between 1 and 255
+followed by n terms
+
+. 1 vbd m n sd : send advisor the current state
+
+vbd is an integer (0-255) indicating the largest free variable
+m is a term
+n is a term
+sd is either None (given as 0) [cursor at the root of the eqn]
+  or Some(b,pos) where b is a boolean and pos is a list of bytes
+     given as 1 followed by b (0 if false; 1 if true)
+        the length of pos and each byte on pos in order
+
+* No reply expected
+
+. 2 i : ask for estimate of distance to success if cursor moves to child i 
+  (i can be between 1-255; in practice it is always 1, 2 or 3)
+
+NOTE: This is only used if -dyndist is given on the command line.
+
+* Reply expected: 2 by1 by2
+  where (by1 * 256 + by2) / 1000 is the estimated number of steps to
+  complete the proof after this action of moving the cursor.
+
+. 3 b nm m1 n1 : ask for estimate of distance to success if we rewrite
+  with the equation named nm at the current position.
+  If b is true, we rewrite from left to right.
+  If b is false, we rewrite from right to left.
+  m1 and n1 are the two new terms we want to prove equal
+  if we do the rewrite.
+
+NOTE: This is only used if -dyndist is given on the command line.
+
+* Reply expected: 2 by1 by2
+  where by1 * 256 + by2 / 1000 is the estimated number of steps to
+  complete the proof after this action of moving the cursor.
+
+. 4 b0 ... b176 : The 176 bytes are all 0 or 1 indicating which of the 176 options are possible.
+Ask for distance estimates for all the options where the byte is 1.
+
+NOTE: This is only used if neither -dyndist nor -constdist is given on the command line.
+
+* Expected Reply: The byte 3 followed by a list of pairs of bytes of length m
+where m is the number of possible options.
+So, if there are m 1's among b0, ..., b176, then the return values should
+be 3 followed by 2m bytes, where each pair of bytes is by1 by2
+representing the number (by1 * 256 + by2) / 1000.
+
+The option i indicated by b_i corresponds to
+
+0 : move cursor to arg 1
+1 : move cursor to arg 2
+2 : move cursor to arg 3
+2n+3 : rewrite with eqn n from left to right (n ranges from 0 to 86)
+2n+4 : rewrite with eqn n from right to left (n ranges from 0 to 86)
+
+Data representations in communication:
+
+bools are one byte: 0 for false; 1 for true
+
+strings are given by 1 byte for the length n of the string
+ followed by n bytes giving the characters of the string
+
+floats (for distance estimates) are given by two bytes by1 by2
+  where (by1 * 256 + by2) / 1000 is the intended float
+
+terms are represented as follows:
+
+Var(i) : 1 i ; assumes i < 256
+
+Skol(h) : 2 h ; h is 32 bytes giving a hash
+
+e (identity constant) : 3
+
+m1 * m2 : 4 <m1> <m2>
+
+m1 \ m2 : 5 <m1> <m2>
+
+m1 / m2 : 6 <m1> <m2>
+
+a(m1,m2,m3) : 7 <m1> <m2> <m3>
+
+K(m1,m2) : 8 <m1> <m2>
+
+T(m1,m2) : 9 <m1> <m2>
+
+L(m1,m2,m3) : 10 <m1> <m2> <m3>
+
+R(m1,m2,m3) : 11 <m1> <m2> <m3>

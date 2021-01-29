@@ -1,0 +1,81 @@
+#!/bin/bash
+
+if [ "$1" = "clean" ]
+then
+    rm src/lexer.ml
+    rm bin/*
+    exit 0
+fi
+
+# If ocamlc is not in your PATH, put the full path here.
+export OCAMLOPT=ocamlopt
+export OCAMLC=ocamlc
+export OCAMLLEX=ocamllex
+
+$OCAMLLEX src/lexer.mll
+
+$OCAMLC -I bin -o bin/utils.cmi -c src/utils.mli
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/utils.cmx -c src/utils.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLC -I bin -o bin/sha256.cmi -c src/sha256.mli
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/sha256.cmx -c src/sha256.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLC -I bin -o bin/merkle.cmi -c src/merkle.mli
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/merkle.cmx -c src/merkle.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLC -I bin -o bin/syntax.cmi -c src/syntax.mli
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/syntax.cmx -c src/syntax.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLC -I bin -o bin/parser.cmi -c src/parser.mli
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/parser.cmx -c src/parser.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/lexer.cmx -c src/lexer.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -I bin -o bin/aimleap.cmx -c src/aimleap.ml
+if [ $? -gt 0 ]
+then
+    exit 1
+fi
+$OCAMLOPT -o bin/aimleap unix.cmxa bin/utils.cmx bin/sha256.cmx bin/merkle.cmx bin/syntax.cmx bin/parser.cmx bin/lexer.cmx bin/aimleap.cmx
+if [ $? -gt 0 ]
+then
+    exit 1
+fi

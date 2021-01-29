@@ -1,0 +1,33 @@
+ARTICLE
+
+(*** Loop Axioms ***)
+Axiom lid : e * x = x.
+Axiom rid : x * e = x.
+Axiom b1 : x \ (x * y) = y.
+Axiom b2 : x * (x \ y) = y.
+Axiom s1 : (x * y) / y = x.
+Axiom s2 : (x / y) * y = x.
+
+Definition a(x,y,z) := (x*(y*z)) \ ((x*y)*z).
+Definition K(x,y) := (y*x)\(x*y).
+Definition T(u,x) := x \ (u*x).
+Definition L(u,x,y) := (y*x) \ (y*(x*u)).
+Definition R(u,x,y) := ((u*x)*y)/(x*y).
+
+(*** AIM Axioms ***)
+Axiom TT: T(T(u,x),y) = T(T(u,y),x).
+Axiom TL: T(L(u,x,y),z) = L(T(u,z),x,y).
+Axiom TR: T(R(u,x,y),z) = R(T(u,z),x,y).
+Axiom LR: L(R(u,x,y),z,w) = R(L(u,z,w),x,y).
+Axiom LL: L(L(u,x,y),z,w) = L(L(u,z,w),x,y).
+Axiom RR: R(R(u,x,y),z,w) = R(R(u,z,w),x,y).
+
+Known id1: y / (x \ y) = x.
+Known id2: (y / x) \ y = x.
+Known id3: e \ x = x.
+Known id4: x / e = x.
+Known id5: x \ x = e.
+Known id6: x / x = e.
+
+Theorem example1: x / e = e \ x.
+Admitted.
