@@ -1,3 +1,15 @@
+AIMLEAP is an environment designed for proving equational theorems 
+by interacting with (typically learning-based) advisors.
+
+It contains a benchmark of 3468 equational problems extracted by 
+processing Veroff's AIM Conecture proofs (https://www.cs.unm.edu/~veroff/AIM_REDONE/).
+
+For details, see:
+Chad Brown, Bartosz Piotrowski and Josef Urban: 
+Learning to Advise an Equational Prover. In AITP'20.
+(http://aitp-conference.org/2020/abstract/paper_32.pdf)
+
+
 Compile:
 
 ./makeoptscript
