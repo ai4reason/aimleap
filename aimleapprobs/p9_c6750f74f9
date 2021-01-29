@@ -1,0 +1,97 @@
+ARTICLE
+
+(*** Loop Axioms ***)
+Axiom lid : e * x = x.
+Axiom rid : x * e = x.
+Axiom b1 : x \ (x * y) = y.
+Axiom b2 : x * (x \ y) = y.
+Axiom s1 : (x * y) / y = x.
+Axiom s2 : (x / y) * y = x.
+
+Definition a(x,y,z) := (x*(y*z)) \ ((x*y)*z).
+Definition K(x,y) := (y*x)\(x*y).
+Definition T(u,x) := x \ (u*x).
+Definition L(u,x,y) := (y*x) \ (y*(x*u)).
+Definition R(u,x,y) := ((u*x)*y)/(x*y).
+
+(*** AIM Axioms ***)
+Axiom TT: T(T(u,x),y) = T(T(u,y),x).
+Axiom TL: T(L(u,x,y),z) = L(T(u,z),x,y).
+Axiom TR: T(R(u,x,y),z) = R(T(u,z),x,y).
+Axiom LR: L(R(u,x,y),z,w) = R(L(u,z,w),x,y).
+Axiom LL: L(L(u,x,y),z,w) = L(L(u,z,w),x,y).
+Axiom RR: R(R(u,x,y),z,w) = R(R(u,z,w),x,y).
+
+Known id1: y / (x \ y) = x.
+Known id2: (y / x) \ y = x.
+Known id3: e \ x = x.
+Known id4: x / e = x.
+Known id5: x \ x = e.
+Known id6: x / x = e.
+Known prop_034cf5c5: x * T(y,x) = y * x.
+Known prop_66f8dd43: T(x / y,y) = y \ x.
+Known prop_81894ca4: (x * T(y,x)) / x = y.
+Known prop_da4738e2: T(x,x \ y) = (x \ y) \ y.
+Known prop_4a90a23f: x * T(T(y,x),z) = T(y,z) * x.
+Known prop_73fa4877: T(T(x / y,z),y) = T(y \ x,z).
+Known prop_d10a3b1a: (x * y) * L(z,y,x) = x * (y * z).
+Known prop_293cbc16: L(x \ y,x,z) = (z * x) \ (z * y).
+Known prop_55464ec9: R(x,y,z) * (y * z) = (x * y) * z.
+Known prop_61fb8127: R(x / y,y,z) = (x * z) / (y * z).
+Known prop_ddd1c86f: x * ((x \ e) * y) = L(y,x \ e,x).
+Known prop_0d7e7151: (x \ e) * y = x \ L(y,x \ e,x).
+Known prop_1aae4a83: x * L(T(y,x),z,w) = L(y,z,w) * x.
+Known prop_1db0183a: x * R(T(y,x),z,w) = R(y,z,w) * x.
+Known prop_a4abb1e0: T(R(x / y,z,w),y) = R(y \ x,z,w).
+Known prop_55842885: T(x / y,z) * y = y * T(y \ x,z).
+Known prop_1a725917: (x * y) \ (x * (z * y)) = L(T(z,y),y,x).
+Known prop_c626af2d: T(x,x * y) = L(T(x,y),y,x).
+Known prop_526a359c: T((x * y) / (z * y),z) = R(z \ x,z,y).
+Known prop_deeac89a: T(R(x,y,z),w) * (y * z) = (T(x,w) * y) * z.
+Known prop_575d1ed9: R(x,x \ e,y) = y / ((x \ e) * y).
+Known prop_f338e359: (e / x) * (x * y) = L(y,x,e / x).
+Known prop_5a914e30: R(x,y,y \ e) = (x * y) * (y \ e).
+Known prop_cc8a9ae6: R(x,e / y,y) = (x * (e / y)) * y.
+Known prop_c2aa8580: L(x \ (y \ z),x,y) = (y * x) \ z.
+Known prop_b3890d2c: R(x / y,y,y \ e) = x * (y \ e).
+Known prop_f14899ed: T(L(x / y,z,w),y) = L(y \ x,z,w).
+Known prop_f2b7d0ab: L(x \ T(y,z),x,z) = (z * x) \ (y * z).
+Known prop_be6cad0a: R((x / y) / z,z,y) = x / (z * y).
+Known prop_1e558562: L((x \ y) / z,z,x) = (z * ((x * z) \ y)) / z.
+Known prop_e9eef609: K(x \ e,x) = (x \ e) * x.
+Known prop_9ee87fb5: K(x,e / x) = x * (e / x).
+Known prop_da958b3f: L(x \ e,x,y) = (y * x) \ y.
+Known prop_c3fa51e8: R(e / x,x,y) = y / (x * y).
+Known prop_ba6418d1: R(e / x,x,y) \ y = x * y.
+Known prop_d7dd57dd: (x * y) \ ((z * x) * y) = R(T(z,x * y),x,y).
+Known prop_e1aa92db: (x * y) * K(y,x) = y * x.
+Known prop_19fcac9b2: R(x / y,z,w) * y = y * R(y \ x,z,w).
+Known prop_3d75df700: (x * y) * R((x * y) \ y,z,w) = (x * R(x \ e,z,w)) * y.
+Known prop_acafcc6f0: L(R(x \ (y \ z),w,u),x,y) = R((y * x) \ z,w,u).
+Known prop_203fc9151: x * (y * R(y \ (x \ y),z,w)) = (x * R(x \ e,z,w)) * y.
+Known prop_2e844a2a9: (x * y) * R((x * y) \ z,w,u) = x * (y * R(y \ (x \ z),w,u)).
+Known prop_d9f457e09: (x \ y) * R((x \ y) \ y,z,w) = R(x,z,w) * (x \ y).
+Known prop_ce2987245: x \ R(x,y,z) = R(x,y,z) * (x \ e).
+Known prop_b7fe5fbfb: K(x \ e,x) = (e / x) \ (x \ e).
+Known prov9_7c96e347d4: R(T(e / x,z),x,y) = T(y / (x * y),z).
+Known prov9_3e047dc57d: R(x,x \ e,y) \ y = (x \ e) * y.
+Known prov9_ee78192c46: R(x,y,x) * (y * x) = (y * x) * T(x,y).
+Known prov9_062c221162: T(x,y) = R(T(x,y * x),y,x).
+Known prov9_d18167fcf7: x * (T(x,y) \ e) = T(x,y) \ x.
+Known prov9_6385279d78: (x \ y) / (y / x) = (e / (y / x)) * (x \ y).
+Known prov9_b192646899: x * T(x \ e,y) = K(y \ (y / x),y).
+Known prov9_2e3bc568bd_alt1: K(x \ (x / (e / y)),x) * y = T(y,x).
+Known prov9_1ffb5e2572: L(T(x \ e,z),x,y) = T((y * x) \ y,z).
+Known prov9_7fed2c3e64: (x * y) * T((x * y) \ x,z) = x * (y * T(y \ e,z)).
+Known prov9_47e1e09ded: (x * y) * T((x * y) \ y,z) = (x * T(x \ e,z)) * y.
+Known prov9_a06014c62d_com: x * (x * T(x \ e,y)) = (x * T(x \ e,y)) * x.
+Known prov9_a06014c62d: T(x,x * T(x \ e,y)) = x.
+Known prov9_49726cdcf0: T(x,(x \ e) * x) = x.
+Known prov9_a69214de59: R(x,x \ e,x) = T(x,x \ e).
+Known prov9_3a3c9a39ee: T(x,x \ e) \ e = T(x \ e,x).
+Known prov9_1cecad55d3: T(x,e / x) = (x \ e) \ e.
+Known prov9_13e5c8ed0a: T(e / (e / x),x \ e) = x.
+Known prov9_183b179b43: K(x,x \ e) * x = T(x,x \ e).
+
+Theorem p9_c6750f74f9: R(R(e / (x \ L(x,y,x)),x \ L(x,y,x),x),(x \ L(x,y,x)) * x,z) \ (x * z) = ((x \ L(x,y,x)) * x) * z.
+Admitted.
